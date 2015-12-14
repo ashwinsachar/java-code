@@ -97,6 +97,108 @@ public class LinkedList {
 		return;
 	}
 	
+	public void getListLengthIterative(){
+		int count = 0;
+		if (head == null)
+			System.out.println("Length is 0");
+		Node n = head;
+		while (n != null){
+			n=n.next;
+			count++;
+		}
+		System.out.println("Length is "+ count);
+	}
+	
+	public void getListLengthRecursive(Node n, int count){
+		if (head == null)
+			System.out.println("Length is 0");
+		if (n != null){
+			count++;
+			getListLengthRecursive(n.next,count);
+		}
+	if (n==null){
+		System.out.println("Length is "+count);
+		}
+	}
+	Node prev1,prev2 = null;
+	//Swapping nodes without swapping keys
+	public void swapNodesWithoutSwappingData(int x, int y){
+		
+		if(x == y){
+			return;
+		}
+		
+		Node n = head;
+		while (n != null && n.data != x){
+			prev1 = n;
+			n = n.next;
+		}
+		System.out.println("Refernce of node containing x before swap"+n.next);
+		
+		Node m = head;
+		while (m != null && m.data != y){
+			prev2 = m;
+			m = m.next;
+		}
+		System.out.println("Refernce of node containing y before swap"+m.next);
+		
+		if(prev1 != null){
+			prev1.next = m;
+		}
+		else
+			head = m;
+		
+		if(prev2 != null){
+			prev2.next = n;
+		}
+		else
+			head = n;
+		
+		Node temp = n.next;
+		n.next = m.next;
+		m.next = temp;
+		
+		System.out.println("Refernce of node containing x after swap"+n.next);
+		System.out.println("Refernce of node containing y after swap"+m.next);
+	}
+	
+
+	// Reverse a linked list
+	public void llReverseIterative(){
+		//First check if ll is empty
+		//If not empty then make the head as the last and refer the last node as head
+		//If size of list = 2 nodes then stop
+		//second node points to the new last node
+		//Now third node points to second node and iterate till end of list
+		
+		if (head == null || head.next == null) return;
+		
+		Node next, current, prev;
+
+		prev =null;
+		current = head;
+		
+		while (current != null){
+			next = current.next;
+			current.next = prev;
+			prev = current;
+			current = next;
+			
+		}
+		head = prev;
+	}
+	
+	public void llReverseRecursive(Node p){
+		if (p.next == null){
+			head = p;
+			return;
+		}
+		llReverseRecursive(p.next);
+		Node q = p.next;
+		q.next = p;
+		p.next = null;
+	}
+	
 	public static void main(String[] args) {
 		LinkedList ll = new LinkedList();
 		ll.head = new Node(0);
@@ -121,8 +223,16 @@ public class LinkedList {
 //		ll.pushAfterAnyNode(givenNode, newNode1);
 //		ll.pushBeforeAnyNode(givenNode, newNode1);
 //		ll.deleteNode(1);
-		ll.deleteNodeByPosition(3);
+//		ll.deleteNodeByPosition(3);
+		System.out.println("Before reversal");
 		ll.display();
+		ll.llReverseRecursive(ll.head);
+//		ll.llReverseIterative();
+		System.out.println("After reversal");
+		ll.display();
+//		ll.getListLengthIterative();
+//		ll.getListLengthRecursive(ll.head, 0);
+//		ll.swapNodesWithoutSwappingData(2, 4);
 		
 
 	}
