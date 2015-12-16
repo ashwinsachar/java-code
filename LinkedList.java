@@ -1,3 +1,4 @@
+import java.util.*;  
 
 public class LinkedList {
 
@@ -199,20 +200,114 @@ public class LinkedList {
 		p.next = null;
 	}
 	
+	public Node mergeList(Node l1, Node l2){
+		if (l1 == null) return l2;
+		if (l2 == null) return l1;
+		
+		if(l1.data < l2.data){
+			head = l1;
+			l1 = l1.next;
+		}
+		else{
+			head = l2;
+			l2 = l2.next;
+		}
+		Node curr = head;
+		while (l1 != null || l2 != null){
+			
+			if (l1 == null){
+				curr.next = l2;
+				return curr;
+			}
+			if (l2 == null){
+				curr.next = l1;
+				return curr;
+			}
+			if (l1.data < l2.data){
+				curr.next = l1;
+				curr = curr.next;
+				l1 = l1.next;
+			}
+			else{
+				curr.next = l2;
+				curr = curr.next;
+				l2 = l2.next;
+			}
+		}
+		return curr;
+		
+		
+	}
+	
+	public Node reverseListInGroup(Node head, int k){
+		Node prev = null; 
+		Node next = null;
+		Node curr = head;
+		int i = 0;
+		while (i<k && curr != null){
+			next = curr.next;
+			curr.next = prev;
+			prev = curr;
+			curr = next;
+			i++;
+		}
+		if (next != null){
+			head.next = reverseListInGroup(next, k);
+		}
+		return prev;
+	}
+	
+	
+	public void detectAndRemoveLoopsIterative(Node head){
+		Node f = head;
+		Node s = head;
+		while((s != null || f != null) && s.data != f.data){
+			s = s.next;
+			f = f.next.next;
+		}
+		if (s.data == f.data){
+			s = head;
+			while (s.data != f.data){
+				s = s.next;
+				f = f.next;
+			}
+			while (f.next.data != s.data){
+				f = f.next;
+			}
+			f.next = null;
+		}	
+	}
+	
 	public static void main(String[] args) {
 		LinkedList ll = new LinkedList();
+		LinkedList l2 = new LinkedList();
+		LinkedList l3 = new LinkedList();
+		
 		ll.head = new Node(0);
 		Node n1 = new Node(1);
-		Node n2 = new Node(2);
-		Node n3 = new Node(3);
-		Node n4 = new Node(4);
-		Node n5 = new Node(5);
+		Node n2 = new Node(4);
+		Node n3 = new Node(8);
+		Node n4 = new Node(9);
+		Node n5 = new Node(10);
+		
+		l2.head = new Node(-1);
+		Node l21 = new Node(2);
+		Node l22 = new Node(3);
+		Node l23 = new Node(5);
+		Node l24 = new Node(6);
+		Node l25 = new Node(7);
 		
 		ll.head.next = n1;
 		n1.next = n2;
 		n2.next = n3;
 		n3.next = n4;
 		n4.next = n5;
+		
+		l2.head.next = l21;
+		l21.next = l22;
+		l22.next = l23;
+		l23.next = l24;
+		l24.next = l25;
 		
 //		Node givenNode = n1;
 		
@@ -224,12 +319,17 @@ public class LinkedList {
 //		ll.pushBeforeAnyNode(givenNode, newNode1);
 //		ll.deleteNode(1);
 //		ll.deleteNodeByPosition(3);
-		System.out.println("Before reversal");
-		ll.display();
-		ll.llReverseRecursive(ll.head);
+//		System.out.println("Before reversal");
+//		ll.display();
+//		l2.display();
+//		ll.llReverseRecursive(ll.head);
 //		ll.llReverseIterative();
-		System.out.println("After reversal");
-		ll.display();
+//		System.out.println("After reversal");
+//		ll.display();
+		l3.mergeList(ll.head, l2.head);
+		l3.display();
+		l3.reverseListInGroup(l3.head, 3);
+		l3.display();
 //		ll.getListLengthIterative();
 //		ll.getListLengthRecursive(ll.head, 0);
 //		ll.swapNodesWithoutSwappingData(2, 4);
