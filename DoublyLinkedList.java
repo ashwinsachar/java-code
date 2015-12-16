@@ -31,9 +31,26 @@ public class DoublyLinkedList {
 			head = newnode;
 			return;
 		}
-		
 	}
 	
+	public void deleteNode(Node givennode){
+		if(head == null){
+			return;
+		}
+		if (head == givennode){
+			head.next.prev = null;
+			head.next = head;
+		}
+		Node curr = head;
+		while (curr != givennode && curr != null){
+			curr = curr.next;
+		}
+		if(curr.next != null){
+			curr.next.prev = curr.prev;
+		}
+		curr.prev.next = curr.next;
+		return;
+	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -67,8 +84,11 @@ public class DoublyLinkedList {
 		
 		Node newNode = new Node(70);
 		int k = 50;
-		d1.display();
-		d1.insertBeforeHead(newNode);
+		
+//		System.out.println("\nBefore Deletion\n");
+//		d1.display();
+//		d1.deleteNode(n3);
+//		System.out.println("\nAfter Deletion\n");
 		d1.display();
 	}
 
