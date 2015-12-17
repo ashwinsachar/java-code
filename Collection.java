@@ -1,6 +1,6 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -173,18 +173,53 @@ public class Collection {
 		// System.out.println(set);
 
 		///// Implementation of Comparator sorting //////
-		List<String> animals = new ArrayList<String>();
+		// List<String> animals = new ArrayList<String>();
+		
+		// animals.add("elephant");
+		// animals.add("dog");
+		// animals.add("cat");
+		// animals.add("mouse");
+		// animals.add("rabbit");
 
-		animals.add("elephant");
-		animals.add("dog");
-		animals.add("cat");
-		animals.add("mouse");
-		animals.add("rabbit");
+		////// Implementation of Comparator on arbitrary objects //////
+		ArrayList<Person> per = new ArrayList<Person>();
+		
+		Person p1 = new Person(1, "Alice");
+		Person p2 = new Person(2, "Bob");
+		Person p3 = new Person(3, "Mike");
+		Person p4 = new Person(4, "Alicia");
+		
+		per.add(p1);
+		per.add(p2);
+		per.add(p3);
+		per.add(p4);
+		
+//		Collections.sort(per, new Comparator<Person>(){
+//
+//			@Override
+//			public int compare(Person o1, Person o2) {
+//				if (o1.getId() < o2.getId()){
+//					return -1;
+//				}
+//				else if (o1.getId() > o2.getId()){
+//					return 1;
+//				}
+//				return 0;
+//			}
+//			
+//		});
+		
+		Collections.sort(per, new Comparator<Person>(){
 
-		Collections.sort(animals, new StringComparator());
+			@Override
+			public int compare(Person o1, Person o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+			
+		});
 
-		for (String animal : animals) {
-			System.out.println(animal);
+		for (Person people : per) {
+			System.out.println(people);
 		}
 
 	}
