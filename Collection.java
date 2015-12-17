@@ -1,8 +1,9 @@
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 class StringComparator implements Comparator<String> {
 
@@ -13,7 +14,7 @@ class StringComparator implements Comparator<String> {
 
 }
 
-class Person {
+class Person implements Comparable<Person> {
 	public int getId() {
 		return id;
 	}
@@ -69,6 +70,20 @@ class Person {
 
 	public String toString() {
 		return "{" + id + ": " + name + "} ";
+	}
+
+	@Override
+	public int compareTo(Person person) {
+		int len1 = name.length();
+		int len2 = person.name.length();
+
+		if (len1 > len2) {
+			return 1;
+		} else if (len1 < len2) {
+			return -1;
+		} else {
+			return name.compareTo(person.name);
+		}
 	}
 }
 
@@ -173,8 +188,9 @@ public class Collection {
 		// System.out.println(set);
 
 		///// Implementation of Comparator sorting //////
+
 		// List<String> animals = new ArrayList<String>();
-		
+
 		// animals.add("elephant");
 		// animals.add("dog");
 		// animals.add("cat");
@@ -182,47 +198,105 @@ public class Collection {
 		// animals.add("rabbit");
 
 		////// Implementation of Comparator on arbitrary objects //////
-		ArrayList<Person> per = new ArrayList<Person>();
-		
-		Person p1 = new Person(1, "Alice");
-		Person p2 = new Person(2, "Bob");
-		Person p3 = new Person(3, "Mike");
-		Person p4 = new Person(4, "Alicia");
-		
-		per.add(p1);
-		per.add(p2);
-		per.add(p3);
-		per.add(p4);
-		
-//		Collections.sort(per, new Comparator<Person>(){
-//
-//			@Override
-//			public int compare(Person o1, Person o2) {
-//				if (o1.getId() < o2.getId()){
-//					return -1;
-//				}
-//				else if (o1.getId() > o2.getId()){
-//					return 1;
-//				}
-//				return 0;
-//			}
-//			
-//		});
-		
-		Collections.sort(per, new Comparator<Person>(){
 
-			@Override
-			public int compare(Person o1, Person o2) {
-				return o1.getName().compareTo(o2.getName());
-			}
-			
-		});
+		// ArrayList<Person> per = new ArrayList<Person>();
 
-		for (Person people : per) {
-			System.out.println(people);
+		// Person p1 = new Person(1, "Alice");
+		// Person p2 = new Person(2, "Bob");
+		// Person p3 = new Person(3, "Mike");
+		// Person p4 = new Person(4, "Alicia");
+		//
+		// per.add(p1);
+		// per.add(p2);
+		// per.add(p3);
+		// per.add(p4);
+
+		// Collections.sort(per, new Comparator<Person>(){
+		//
+		// @Override
+		// public int compare(Person o1, Person o2) {
+		// if (o1.getId() < o2.getId()){
+		// return -1;
+		// }
+		// else if (o1.getId() > o2.getId()){
+		// return 1;
+		// }
+		// return 0;
+		// }
+		//
+		// });
+
+		// Collections.sort(per, new Comparator<Person>(){
+		//
+		// @Override
+		// public int compare(Person o1, Person o2) {
+		// return o1.getName().compareTo(o2.getName());
+		// }
+		//
+		// });
+		//
+		// for (Person people : per) {
+		// System.out.println(people);
+		// }
+		//
+
+		// The Comparable interface is similar to the comparator interface
+		// except that the object which uses the
+		// comparable interface must implement the compareTo method to provide
+		// the object a natural ordering
+
+		/////// Queues ///////
+
+		// ArrayBlockingQueue<Integer> q1 = new ArrayBlockingQueue<Integer>(5);
+		// q1.add(10);
+		// q1.add(20);
+		// q1.add(30);
+		// q1.add(40);
+		// q1.add(50);
+		//
+		// try {
+		// q1.add(60);
+		// } catch (IllegalStateException e) {
+		// System.out.println("Too many values in queue, throwing exception" +
+		// e);
+		// }
+		// for (Integer i : q1) {
+		// System.out.println(i);
+		// }
+		// q1.size();
+		// System.out.println("Removed from queue" + q1.remove());
+		// System.out.println("Removed from queue" + q1.remove());
+		// System.out.println("Removed from queue" + q1.remove());
+		// System.out.println("Removed from queue" + q1.remove());
+		// System.out.println("Removed from queue" + q1.remove());
+		// try {
+		// System.out.println("Removed from queue" + q1.remove());
+		// } catch (NoSuchElementException e) {
+		// System.out.println("Queue empty, can't remove any more." + e);
+		// }
+
+		Queue<Integer> q2 = new ArrayBlockingQueue<Integer>(2);
+
+		System.out.println("Queue 2 peek: " + q2.peek());
+
+		q2.offer(10);
+		q2.offer(20);
+
+		System.out.println("Queue 2 peek: " + q2.peek());
+
+		if (q2.offer(30) == false) {
+			System.out.println("Offer failed to add third item.");
 		}
 
+		for (Integer value : q2) {
+			System.out.println("Queue 2 value: " + value);
+		}
+
+		System.out.println("Queue 2 poll: " + q2.poll());
+		System.out.println("Queue 2 poll: " + q2.poll());
+		System.out.println("Queue 2 poll: " + q2.poll());
 	}
+
 
 	public static void testmap(Map<Integer, String> map) {
 		map.put(1, "One");
