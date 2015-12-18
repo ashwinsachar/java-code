@@ -14,6 +14,68 @@ class StringComparator implements Comparator<String> {
 
 }
 
+class StackNode<T>{
+	T data;
+	StackNode next;
+	StackNode(){};
+	StackNode(T data){
+		this.data = data;
+		next = null;
+	}
+}
+
+////// Stack class //////
+class Stack<T>{
+	private StackNode<T> top = null;
+	
+	Stack(){
+	}
+	
+	Stack(T data){
+		top = new StackNode(data);
+	}
+	
+	public void push(T data){
+		if (top == null){
+			top = new StackNode(data);
+		}
+		StackNode newNode = new StackNode(data);
+		newNode.next = top;
+		top = newNode;
+	}
+	
+	public T pop(){
+		if (top == null){
+			System.out.println("Underflow");
+			return null;
+		}
+		T popvalue = top.data;
+		top = top.next;
+		return popvalue;
+	}
+	
+	public T peek(){
+		if (top == null){
+			System.out.println("Underflow");
+			return null;
+		}
+		return top.data;
+	}
+	
+	public int getCount(){
+		if (top == null){
+			return 0;
+		}
+		StackNode curr = top;
+		int count = 0;
+		while (curr != null){
+			count++;
+			curr = curr.next;
+		}
+		return count;
+	}
+}
+
 class Person implements Comparable<Person> {
 	public int getId() {
 		return id;
@@ -275,26 +337,31 @@ public class Collection {
 		// System.out.println("Queue empty, can't remove any more." + e);
 		// }
 
-		Queue<Integer> q2 = new ArrayBlockingQueue<Integer>(2);
-
-		System.out.println("Queue 2 peek: " + q2.peek());
-
-		q2.offer(10);
-		q2.offer(20);
-
-		System.out.println("Queue 2 peek: " + q2.peek());
-
-		if (q2.offer(30) == false) {
-			System.out.println("Offer failed to add third item.");
-		}
-
-		for (Integer value : q2) {
-			System.out.println("Queue 2 value: " + value);
-		}
-
-		System.out.println("Queue 2 poll: " + q2.poll());
-		System.out.println("Queue 2 poll: " + q2.poll());
-		System.out.println("Queue 2 poll: " + q2.poll());
+		// Queue<Integer> q2 = new ArrayBlockingQueue<Integer>(2);
+		//
+		// System.out.println("Queue 2 peek: " + q2.peek());
+		//
+		// q2.offer(10);
+		// q2.offer(20);
+		//
+		// System.out.println("Queue 2 peek: " + q2.peek());
+		//
+		// if (q2.offer(30) == false) {
+		// System.out.println("Offer failed to add third item.");
+		// }
+		//
+		// for (Integer value : q2) {
+		// System.out.println("Queue 2 value: " + value);
+		// }
+		//
+		// System.out.println("Queue 2 poll: " + q2.poll());
+		// System.out.println("Queue 2 poll: " + q2.poll());
+		// System.out.println("Queue 2 poll: " + q2.poll());
+		
+		/////// Stack ////////
+		
+		
+		
 	}
 
 
