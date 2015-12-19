@@ -16,7 +16,7 @@ class StringComparator implements Comparator<String> {
 
 class StackNode<T>{
 	T data;
-	StackNode next;
+	StackNode<T> next;
 	StackNode(){};
 	StackNode(T data){
 		this.data = data;
@@ -32,14 +32,14 @@ class Stack<T>{
 	}
 	
 	Stack(T data){
-		top = new StackNode(data);
+		top = new StackNode<T>(data);
 	}
 	
 	public void push(T data){
 		if (top == null){
-			top = new StackNode(data);
+			top = new StackNode<T>(data);
 		}
-		StackNode newNode = new StackNode(data);
+		StackNode<T> newNode = new StackNode<T>(data);
 		newNode.next = top;
 		top = newNode;
 	}
@@ -66,13 +66,21 @@ class Stack<T>{
 		if (top == null){
 			return 0;
 		}
-		StackNode curr = top;
+		StackNode<T> curr = top;
 		int count = 0;
 		while (curr != null){
 			count++;
 			curr = curr.next;
 		}
 		return count;
+	}
+	
+	public void print(){
+		StackNode<T> curr = top;
+		while (curr != null){
+			System.out.println(curr.data.toString());
+			curr = curr.next;
+		}
 	}
 }
 
@@ -152,7 +160,6 @@ class Person implements Comparable<Person> {
 public class Collection {
 
 	public Collection() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public static void main(String[] args) {
@@ -360,7 +367,15 @@ public class Collection {
 		
 		/////// Stack ////////
 		
+		Stack<Integer> s = new Stack<Integer>(1);
+		s.push(39);
+		s.push(23);
+		System.out.println(s.peek());
 		
+		Stack<String> s2 = new Stack<String>("gautham");
+		s2.push("farina");
+		s2.print();
+		System.out.println(s2.pop());
 		
 	}
 
